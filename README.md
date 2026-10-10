@@ -9,10 +9,10 @@
   <a href="#-overview">Overview</a> •
   <a href="#-features">Features</a> •
   <a href="#-installation">Installation</a> •
-  <a href="#-usage">Usage</a> •
+  <a href="#%EF%B8%8F-usage">Usage</a> •
   <a href="#-notebook-structure">Notebook Structure</a> •
   <a href="#-learning-objectives">Learning Objectives</a> •
-  <a href="#-technologies">Technologies</a> •
+  <a href="#%EF%B8%8F-technologies">Technologies</a> •
   <a href="#-contributing">Contributing</a> •
   <a href="#-license">License</a>
 </p>
