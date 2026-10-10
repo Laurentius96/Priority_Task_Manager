@@ -1,317 +1,188 @@
-<div align="center">  <h1> Priority Task Manager </div>
-
 <div align="center">
-  <h3>Python Task Management System with Priority Levels</h3>
-  <p><i>An educational Jupyter notebook project developed by DNC to teach fundamental Python concepts through practical task management implementation.</i></p>
-</div>
 
-<p align="center">
+# 📋 Priority Task Manager
+
+**An interactive command-line to-do list in Python, with color-coded priorities and JSON persistence**
+
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white)
+![JSON](https://img.shields.io/badge/JSON_storage-000000?style=for-the-badge&logo=json&logoColor=white)
+![DNC School](https://img.shields.io/badge/DNC_School-Python_case-6D28D9?style=for-the-badge)
+
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Laurentius96/Priority_Task_Manager/blob/main/main.ipynb)
+
+<p>
   <a href="#-overview">Overview</a> •
   <a href="#-features">Features</a> •
-  <a href="#-installation">Installation</a> •
-  <a href="#%EF%B8%8F-usage">Usage</a> •
-  <a href="#-notebook-structure">Notebook Structure</a> •
-  <a href="#-learning-objectives">Learning Objectives</a> •
-  <a href="#%EF%B8%8F-technologies">Technologies</a> •
-  <a href="#-contributing">Contributing</a> •
+  <a href="#-how-it-works">How It Works</a> •
+  <a href="#-sample-session">Sample Session</a> •
+  <a href="#-how-to-run">How to Run</a> •
   <a href="#-license">License</a>
 </p>
 
+</div>
+
+---
+
 ## 🔍 Overview
 
-This project is a comprehensive task management system implemented in Python using Jupyter notebooks as part of DNC's (Digital Nation Course) educational curriculum. The system demonstrates essential programming concepts through a practical application that allows users to manage tasks with different priority levels.
+**Priority Task Manager** is a menu-driven terminal app to add, list, remove and save tasks, each with a priority level shown as a colored marker. It was built as a Python case in the **DNC School Data Scientist program**, following the course's step-by-step task-list case (data types, control flow, data structures, functions and files) and extending the final version with a formatted interface and input checks.
 
-The project serves as an interactive learning experience, combining theoretical concepts with hands-on implementation in a notebook environment that facilitates experimentation and learning.
+| Concept | Where it shows up |
+|---|---|
+| 🧱 Data structures | Each task is a dictionary (`name`, `priority`) stored in a list |
+| 🧩 Functions | One function per operation, plus layout helpers |
+| 🔁 Control flow | Main menu loop and conditional priority markers |
+| 🛡️ Input handling | Numeric menu check (`ValueError`), empty-name check, default priority |
+| 💾 File I/O | Load and save with the `json` module |
 
-## 🚀 Features
+## ✨ Features
 
-### Core Functionalities
-- **Add Tasks**: Create new tasks with descriptions and priority assignments
-- **Remove Tasks**: Delete specific tasks from the system
-- **List Tasks**: Display all current tasks with their priority levels
-- **Save Tasks**: Persist task data to files for future sessions
-- **Interactive Menu**: User-friendly command-line interface
+| Option | Action | Details |
+|:---:|---|---|
+| 1 | ➕ Add task | Name (required) and priority; an empty priority becomes **Medium** |
+| 2 | 📋 List tasks | Numbered list with a colored priority marker |
+| 3 | 🗑️ Remove task | Shows the tasks, then removes one by name (case-insensitive) |
+| 4 | 💾 Save | Writes the list to `tasks.json` |
+| 5 | 🚪 Exit | Closes the program (unsaved changes are discarded) |
 
-### Priority System
-- **High Priority**: Critical tasks requiring immediate attention
-- **Medium Priority**: Important tasks with moderate urgency
-- **Low Priority**: Tasks that can be completed when time permits
+**Priority markers:**
 
-### Educational Components
-- **Step-by-step Implementation**: Code broken down into digestible sections
-- **Concept Explanations**: Detailed explanations of Python concepts used
-- **Interactive Examples**: Live code cells for experimentation
+| Marker | Priority typed |
+|:---:|---|
+| 🔴 | `High` or `Urgent` |
+| 🟡 | `Medium` |
+| 🟢 | Anything else, such as `Low` |
 
-## 💾 Installation
+Priorities are matched case-insensitively.
 
-### Prerequisites
-- Python 3.7 or higher
-- Jupyter Notebook or JupyterLab
-- Basic understanding of Python syntax
+## 🧭 How It Works
 
-### Setup Instructions
+```mermaid
+flowchart LR
+    A[Start] --> B{tasks.json<br/>exists?}
+    B -- yes --> C[Load tasks]
+    B -- no --> D[Start an empty list]
+    C --> E[Menu]
+    D --> E
+    E --> F[Add · List · Remove]
+    F --> E
+    E --> G[Save] --> H[(tasks.json)]
+    G --> E
+    E --> I[Exit]
+```
 
-1. **Clone the repository:**
+Tasks are saved as a JSON list ([`tasks.json`](tasks.json) holds one sample task):
+
+```json
+[{"name": "T1", "priority": "Low"}]
+```
+
+## 🎬 Sample Session
+
+<details open>
+<summary><b>Adding tasks and listing them</b> (real output, trimmed; typed values shown after each prompt)</summary>
+<br>
+
+```text
+============================================================
+                       📋 TASK MANAGER                       
+============================================================
+➕ ADD NEW TASK
+============================================================
+📝 Task name: Study pandas
+
+🔥 Priority options:
+   • High/Urgent
+   • Medium
+   • Low
+
+🎯 Task priority: High
+
+✅ Task added successfully!
+📝 Study pandas | 🔥 Priority: High
+
+...
+
+============================================================
+📋 TASK LIST
+============================================================
+ 1. 🟢 T1
+     └─ Priority: Low
+
+ 2. 🔴 Study pandas
+     └─ Priority: High
+
+ 3. 🟡 Review pull request
+     └─ Priority: Medium
+```
+
+The third task was added with an empty priority, so it defaulted to **Medium**.
+
+</details>
+
+## 🚀 How to Run
+
+**Option 1: Google Colab (no installation).** Click the **Open in Colab** badge above and run the code cell.
+
+**Option 2: Jupyter.**
+
 ```bash
 git clone https://github.com/Laurentius96/Priority_Task_Manager.git
-```
-
-2. **Navigate to project directory:**
-```bash
 cd Priority_Task_Manager
-```
-
-3. **Run the `main.ipynb` notebook in a Jupyter environment:**
-```bash
+pip install notebook
 jupyter notebook main.ipynb
 ```
 
-4. **Alternatively, run the script directly:**
+**Option 3: terminal (best experience, since screen clearing only works in a terminal).**
+
 ```bash
-python -m main.py
+jupyter nbconvert --to script main.ipynb
+python main.py
 ```
 
-## ⚙️ Usage
+Only the Python standard library is used (`json`, `os`); Python 3.8 or newer is recommended.
 
-### Running the Notebook
+## 🚧 Limitations
 
-The notebook is structured in sequential cells that build upon each other. Execute cells in order using `Shift + Enter`.
+- **Saving is manual:** use option 4 before exiting; the program does not save on exit.
+- Priorities are free text: only `High`, `Urgent` and `Medium` get their own markers, and the list is shown in insertion order, not sorted by priority.
+- Removing a task requires typing its name; the numbers in the list are for display only.
+- In Jupyter and Colab, the screen-clearing calls have no effect, so the output keeps growing.
 
-### Sample Code Examples
-
-**Task Data Structure:**
-```python
-# Example task structure used in the notebook
-tasks = [
-    {"description": "Study Python", "priority": "High"},
-    {"description": "Go to gym", "priority": "Medium"},
-    {"description": "Buy groceries", "priority": "Low"}
-]
-```
-
-**Adding a Task Function:**
-```python
-def add_task(tasks, description, priority):
-    """
-    Add a new task to the task list
-    
-    Parameters:
-    tasks (list): Current list of tasks
-    description (str): Task description
-    priority (str): Task priority level
-    """
-    new_task = {"description": description, "priority": priority}
-    tasks.append(new_task)
-    print(f"Task '{description}' added with {priority} priority!")
-    return tasks
-```
-
-**Expected Output:**
-```
-Task 'Study Python' added with High priority!
-Current tasks: 3
-```
-
-### Interactive Menu System
-
-```python
-def display_menu():
-    print("\n=== TASK MANAGER ===")
-    print("1. Add Task")
-    print("2. Remove Task") 
-    print("3. List Tasks")
-    print("4. Save Tasks")
-    print("5. Exit")
-    return input("Choose an option (1-5): ")
-```
-
-**Sample Execution Result:**
-```
-=== TASK MANAGER ===
-1. Add Task
-2. Remove Task
-3. List Tasks
-4. Save Tasks
-5. Exit
-Choose an option (1-5): 3
-
-=== CURRENT TASKS ===
-1. Study Python - Priority: High
-2. Go to gym - Priority: Medium
-3. Buy groceries - Priority: Low
-```
-
-## 📓 Notebook Structure
+## 📁 Project Structure
 
 ```
-task_manager.ipynb
-├── 1. Introduction & Setup
-│   ├── Project overview
-│   ├── Learning objectives
-│   └── Import statements
-├── 2. Data Structures
-│   ├── Task representation
-│   ├── List operations
-│   └── Dictionary usage
-├── 3. Core Functions
-│   ├── add_task()
-│   ├── remove_task()
-│   ├── list_tasks()
-│   └── save_tasks()
-├── 4. Control Flow
-│   ├── Menu system
-│   ├── User input handling
-│   └── Conditional logic
-├── 5. File Operations
-│   ├── Saving to file
-│   ├── Loading from file
-│   └── Error handling
-├── 6. Main Program Loop
-│   ├── Interactive execution
-│   ├── Menu navigation
-│   └── Program termination
-└── 7. Exercises & Extensions
-    ├── Practice problems
-    ├── Enhancement ideas
-    └── Further learning resources
+📁 Priority_Task_Manager/
+├── 📓 main.ipynb     # The whole application in one code cell
+├── 📄 tasks.json     # Saved tasks (one sample entry)
+├── 📄 LICENSE.md     # CC BY-NC-ND 4.0
+└── 📄 README.md
 ```
-
-## 🎯 Learning Objectives
-
-This notebook teaches the following Python concepts through practical implementation:
-
-### 1. Data Structures
-- **Lists**: Managing collections of tasks
-- **Dictionaries**: Storing task attributes
-- **Data manipulation**: Adding, removing, and modifying data
-
-### 2. Control Flow
-- **Conditional statements**: Menu navigation and decision making
-- **Loops**: Iterating through task collections
-- **Function definitions**: Code organization and reusability
-
-### 3. File I/O Operations
-- **Writing files**: Persisting task data
-- **Reading files**: Loading saved tasks
-- **Error handling**: Managing file operations safely
-
-### 4. User Interaction
-- **Input validation**: Ensuring data integrity
-- **Menu systems**: Creating user-friendly interfaces
-- **Output formatting**: Presenting information clearly
-
-## 🛠️ Technologies
-
-- **Python 3.x**: Core programming language
-- **Jupyter Notebook**: Interactive development environment
-- **Built-in Libraries**: 
-  - `os`: File system operations
-  - `json`: Data serialization (optional enhancement)
-- **Pandas**: Data manipulation (for advanced features)
-
-## 📊 Code Examples with Results
-
-### Task Listing Function
-```python
-def list_tasks(tasks):
-    """Display all tasks with their priorities"""
-    if not tasks:
-        print("No tasks available.")
-        return
-    
-    print("\n=== CURRENT TASKS ===")
-    for i, task in enumerate(tasks, 1):
-        print(f"{i}. {task['description']} - Priority: {task['priority']}")
-```
-
-**Execution Result:**
-```python
-# Sample execution in notebook cell
-tasks = [
-    {"description": "Complete Python project", "priority": "High"},
-    {"description": "Review code documentation", "priority": "Medium"}
-]
-
-list_tasks(tasks)
-```
-
-**Output:**
-```
-=== CURRENT TASKS ===
-1. Complete Python project - Priority: High
-2. Review code documentation - Priority: Medium
-```
-
-### File Save Operation
-```python
-def save_tasks_to_file(tasks, filename="tasks.txt"):
-    """Save tasks to a text file"""
-    try:
-        with open(filename, "w") as file:
-            for task in tasks:
-                file.write(f"{task['description']},{task['priority']}\n")
-        print(f"Tasks saved to {filename} successfully!")
-    except Exception as e:
-        print(f"Error saving tasks: {e}")
-```
-
-**Expected Result:**
-```
-Tasks saved to tasks.txt successfully!
-File created: tasks.txt
-Content preview:
-Complete Python project,High
-Review code documentation,Medium
-```
-
-## 🚀 Enhancement Ideas
-
-The project can be extended with additional features:
-
-- **Task Categories**: Group tasks by work, personal, etc.
-- **Due Dates**: Add deadline tracking functionality
-- **Task Status**: Implement completed/pending status
-- **Data Visualization**: Create charts showing task distribution
-- **Export Options**: Save tasks in different formats (CSV, JSON)
 
 ## 🤝 Contributing
 
-This educational project welcomes contributions to improve the learning experience:
+Contributions, ideas and feedback are welcome!
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/educational-enhancement`)
-3. Make your changes with clear documentation
-4. Add examples and explanations for new concepts
-5. Submit a pull request with detailed description
+- 🐛 **Found a bug or something unclear?** [Open an issue](https://github.com/Laurentius96/Priority_Task_Manager/issues/new) describing what happened and how to reproduce it.
+- 💡 **Have an idea or a question?** [Open an issue](https://github.com/Laurentius96/Priority_Task_Manager/issues/new) and tell me about it.
+- 🔧 **Want to propose a fix?** Fork the repository, create a branch (`git checkout -b fix/short-description`), commit your changes and open a pull request explaining what changed and why.
+
+By contributing, you agree that your contribution is shared under the same license as this project.
 
 ## 📜 License
 
-This project is part of DNC's educational curriculum and is available for learning purposes.
+This project is licensed under the [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0)](LICENSE.md). The case statement belongs to DNC School.
 
-<details open>
-<summary><b>CC BY-NC-ND 4.0 License</b></summary>
-
-This repository is licensed under the [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License](https://creativecommons.org/licenses/by-nc-nd/4.0/).
-
-### What this means:
-
-- ✅ **You can share** — You are free to copy and redistribute the material in any medium or format
-- ❌ **No commercial use** — You may not use the material for commercial purposes
-- ❌ **No derivatives** — You may not remix, transform, or build upon the material
-- ✅ **Attribution required** — You must give appropriate credit, provide a link to the license, and indicate if changes were made
-
-For the complete license terms, please see the [LICENSE.md](LICENSE.md) file.
-</details>
-
-## 🎓 Educational Resources
-
-- **Python Documentation**: [python.org](https://docs.python.org/)
-- **Jupyter Notebook Guide**: [jupyter.org](https://jupyter.org/documentation)
-- **Data Structures Tutorial**: Additional learning materials in the notebook
+**What this means:**
+- ✅ You may **share** this work with **attribution**
+- ❌ You may **not** use it for **commercial purposes**
+- ❌ You may **not** distribute **modified versions**
 
 ---
 
 <div align="center">
-  <p><b>Developed with 💙 by <a href="https://github.com/Laurentius96">Lorenzo C. Bianchi</a> feat. DNC Educational Team</b></p>
-  <p><i>Learning through practice - building real solutions with code!</i></p>
+
+**Lorenzo C. Bianchi** · [GitHub](https://github.com/Laurentius96) · [LinkedIn](https://www.linkedin.com/in/cb-lorenzo/)
+
 </div>
